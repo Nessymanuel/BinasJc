@@ -36,7 +36,7 @@ const SignupScreen: React.FC<SignupScreenProps> = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      {/* <Text style={styles.title}>Cadastro</Text> */}
+       <Text style={styles.title}>Registro</Text> 
       <TextInput
         style={styles.input}
         placeholder="Nome de Usuário"
