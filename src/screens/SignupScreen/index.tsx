@@ -14,7 +14,6 @@ const SignupScreen: React.FC<SignupScreenProps> = ({ navigation }) => {
   const [confirmPassword, setConfirmPassword] = useState('');
 
   const handleSignup = () => {
-    // Validação dos campos
     if (!username || !email || !password || !confirmPassword) {
       Alert.alert('Erro', 'Por favor, preencha todos os campos.');
       return;
@@ -36,7 +35,8 @@ const SignupScreen: React.FC<SignupScreenProps> = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-       <Text style={styles.title}>Registro</Text> 
+      <Text style={styles.title}>Crie sua Conta</Text>
+      <Text style={styles.subtitle}>Preencha os dados abaixo</Text>
       <TextInput
         style={styles.input}
         placeholder="Nome de Usuário"
@@ -65,7 +65,9 @@ const SignupScreen: React.FC<SignupScreenProps> = ({ navigation }) => {
         secureTextEntry
       />
       <View style={styles.buttonContainer}>
-        <Button title="Registrar" onPress={handleSignup} color="#FF69B4" />
+        <TouchableOpacity style={styles.button} onPress={handleSignup}>
+          <Text style={styles.buttonText}>Registrar</Text>
+        </TouchableOpacity>
       </View>
       <View style={styles.footer}>
         <Text style={styles.footerText}>Já tem uma conta?</Text>
@@ -78,4 +80,3 @@ const SignupScreen: React.FC<SignupScreenProps> = ({ navigation }) => {
 };
 
 export default SignupScreen;
-

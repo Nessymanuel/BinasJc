@@ -9,16 +9,29 @@ type LoginScreenProps = {
 
 const LoginScreen: React.FC<LoginScreenProps> = ({ navigation }) => {
   const goToHome = () => {
-    navigation.navigate('Main'); // Navega para o BottomTabNavigator
+    navigation.navigate('Main');
   };
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Login</Text>
-      <TextInput style={styles.input} placeholder="Email" keyboardType="email-address" />
-      <TextInput style={styles.input} placeholder="Senha" secureTextEntry />
+      <Text style={styles.title}>Bem-vindo(a)</Text>
+      <Text style={styles.subtitle}>Faça login para continuar</Text>
+      <TextInput 
+        style={styles.input} 
+        placeholder="Email" 
+        keyboardType="email-address" 
+        placeholderTextColor="#A9A9A9"
+      />
+      <TextInput 
+        style={styles.input} 
+        placeholder="Senha" 
+        secureTextEntry 
+        placeholderTextColor="#A9A9A9"
+      />
       <View style={styles.buttonContainer}>
-        <Button title="Entrar" onPress={goToHome} color="#FF69B4" />
+        <TouchableOpacity style={styles.button}onPress={() => navigation.navigate('Main')}>
+          <Text style={styles.buttonText}>Entrar</Text>
+        </TouchableOpacity>
       </View>
       <View style={styles.footer}>
         <Text style={styles.footerText}>Não tem uma conta?</Text>

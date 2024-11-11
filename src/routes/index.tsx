@@ -7,7 +7,7 @@ import ProfileScreen from '../screens/ProfileScreen';
 import CyclistsScreen from '../screens/CyclistsScreen';
 import StationsScreen from '../screens/StationsScreen';
 import ChatScreen from '../screens/ChatScreen';
-import HomeScreen from '../screens/HomeScreen'; 
+import HomeScreen from '../screens/HomeScreen';
 
 const Tab = createBottomTabNavigator();
 
@@ -17,57 +17,58 @@ export default function BottomTabNavigator() {
       screenOptions={{
         tabBarActiveTintColor: '#FF69B4',  // Cor rosa para a aba ativa
         tabBarInactiveTintColor: 'gray',    // Cor cinza para abas inativas
+        headerShown: false
       }}
     >
-      <Tab.Screen 
-        name="Home"  
-        component={HomeScreen} 
-        options={{  
+      <Tab.Screen
+        name="Home"
+        component={HomeScreen}
+        options={{
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="home" size={size} color={color} />
           ),
           headerShown: false, // Ocultar o cabeçalho
-        }}  
+        }}
       />
-      <Tab.Screen 
-        name="Chat" 
-        component={ChatScreen} 
+      <Tab.Screen
+        name="Chat"
+        component={ChatScreen}
         options={{
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="chatbubbles" size={size} color={color} />
           ),
-          headerShown: false, 
-        }} 
+          headerShown: false,
+        }}
       />
-      <Tab.Screen 
-        name="Estações" 
-        component={StationsScreen} 
+      <Tab.Screen
+        name="Estações"
+        component={StationsScreen}
         options={{
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="bicycle" size={size} color={color} />
           ),
-          headerShown: false, 
-        }} 
+          headerShown: false,
+        }}
       />
-      <Tab.Screen 
-        name="Ciclistas" 
-        component={CyclistsScreen} 
+      <Tab.Screen
+        name="Ciclistas"
+        component={CyclistsScreen}
         options={{
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="people" size={size} color={color} />
           ),
-          headerShown: false, 
-        }} 
+          headerShown: false,
+        }}
       />
-      <Tab.Screen 
-        name="Perfil" 
-        component={ProfileScreen} 
+      <Tab.Screen
+        name="Perfil"
+        component={ProfileScreen}
         options={{
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="person" size={size} color={color} />
           ),
-          headerShown: false, 
-        }} 
+          headerShown: false,
+        }}
       />
     </Tab.Navigator>
   );
