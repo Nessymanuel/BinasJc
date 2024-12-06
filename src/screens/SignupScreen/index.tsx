@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { View, TextInput, Button, Text, TouchableOpacity, Alert } from 'react-native';
+import { View, TextInput, Text, TouchableOpacity, Alert } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import styles from './styles';
+import { BASE_URL } from '../../../config';
 
 type SignupScreenProps = {
   navigation: StackNavigationProp<any>;
@@ -13,7 +14,7 @@ const SignupScreen: React.FC<SignupScreenProps> = ({ navigation }) => {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
 
-  const handleSignup = () => {
+  const handleSignup = async () => {
     if (!username || !email || !password || !confirmPassword) {
       Alert.alert('Erro', 'Por favor, preencha todos os campos.');
       return;
@@ -22,11 +23,34 @@ const SignupScreen: React.FC<SignupScreenProps> = ({ navigation }) => {
       Alert.alert('Erro', 'As senhas não correspondem.');
       return;
     }
-
-    // Lógica para registrar o usuário
-    console.log('Usuário cadastrado com sucesso!');
-    Alert.alert('Sucesso', 'Usuário cadastrado com sucesso!');
-    // navigation.navigate('Login'); // Se desejar redirecionar para a tela de login
+  
+    try {
+      const response = await fetch(`${BASE_URL}/User`, {  // Usa BASE_URL aqui
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          id: 0,
+          nome: username,
+          email: email,
+          telefone: '000000000',
+          pontuacaoTotal: 0,
+          dataRegistro: new Date().toISOString(),
+          senha: password,
+        }),
+      });
+  
+      if (response.ok) {
+        Alert.alert('Sucesso', 'Usuário cadastrado com sucesso!');
+        navigation.navigate('Login');
+      } else {
+        Alert.alert('Erro', 'Não foi possível cadastrar o usuário. Verifique os dados e tente novamente.');
+      }
+    } catch (error) {
+      Alert.alert('Erro', 'Ocorreu um erro ao tentar registrar. Verifique sua conexão e tente novamente.');
+      console.error('Erro ao cadastrar:', error);
+    }
   };
 
   const handleLoginNavigation = () => {

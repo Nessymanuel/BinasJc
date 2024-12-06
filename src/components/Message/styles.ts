@@ -3,11 +3,11 @@ import { StyleSheet } from 'react-native';
 export default StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F2F2F2', // Fundo do aplicativo
+    backgroundColor: '#F2F2F2',
   },
   header: {
     height: 60,
-    backgroundColor: '#5C6BC0', // Azul médio para o cabeçalho
+    backgroundColor: '#5C6BC0',
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
@@ -47,14 +47,14 @@ export default StyleSheet.create({
     marginRight: 5,
   },
   receivedMessage: {
-    backgroundColor: '#E3F2FD', // Azul claro para mensagens recebidas
+    backgroundColor: '#E3F2FD',
     padding: 10,
     borderRadius: 10,
     maxWidth: '80%',
     borderTopLeftRadius: 0,
   },
   sentMessage: {
-    backgroundColor: '#E0E0E0', // Cinza claro para mensagens enviadas
+    backgroundColor: '#E0E0E0',
     padding: 10,
     borderRadius: 10,
     maxWidth: '80%',
@@ -76,7 +76,7 @@ export default StyleSheet.create({
   },
   input: {
     flex: 1,
-    borderWidth: 1,
+    borderWidth: 10,
     borderColor: '#ccc',
     borderRadius: 25,
     paddingHorizontal: 15,
@@ -85,7 +85,7 @@ export default StyleSheet.create({
   },
   sendPointsButton: {
     marginLeft: 10,
-    backgroundColor: '#5C6BC0', // Azul médio para o botão de pontos
+    backgroundColor: '#5C6BC0',
     borderRadius: 20,
     padding: 10,
     alignItems: 'center',
@@ -97,7 +97,7 @@ export default StyleSheet.create({
   },
   sendButton: {
     marginLeft: 10,
-    backgroundColor: '#5C6BC0', // Azul médio para o botão de envio
+    backgroundColor: '#5C6BC0',
     borderRadius: 20,
     padding: 10,
     alignItems: 'center',
@@ -106,5 +106,75 @@ export default StyleSheet.create({
   sendButtonText: {
     fontSize: 20,
     color: 'white',
+  },
+
+  // Modal Styles for Points Transfer
+  modalContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  },
+  modalContent: {
+    width: '85%',
+    backgroundColor: '#fff',
+    padding: 25,
+    borderRadius: 10,
+    alignItems: 'center',
+  },
+  modalTitle: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: '#333',
+    marginBottom: 15,
+  },
+  pointsAvailableText: {
+    fontSize: 16,
+    color: '#666',
+    marginBottom: 10,
+  },
+  inputPoints: {
+    width: '100%',
+    height: 60, // Aumenta a altura para maior visibilidade
+    borderColor: '#5C6BC0',
+    borderWidth: 1,
+    borderRadius: 10,
+    paddingHorizontal: 15,
+    fontSize: 20, // Aumenta o tamanho da fonte
+    color: '#333',
+    backgroundColor: '#f9f9f9',
+    marginBottom: 20,
+    textAlign: 'center', // Centraliza o texto no campo
+  },
+  modalButtons: {
+    flexDirection: 'row',
+    width: '100%',
+    justifyContent: 'space-between',
+    marginTop: 20,
+  },
+  cancelButton: {
+    backgroundColor: '#ccc',
+    paddingVertical: 12,
+    paddingHorizontal: 25,
+    borderRadius: 8,
+    flex: 1,
+    marginRight: 10,
+  },
+  confirmButton: {
+    backgroundColor: '#5C6BC0',
+    paddingVertical: 12,
+    paddingHorizontal: 25,
+    borderRadius: 8,
+    flex: 1,
+  },
+  cancelButtonText: {
+    color: '#000',
+    fontSize: 16,
+    textAlign: 'center',
+  },
+  confirmButtonText: {
+    color: '#fff',
+    fontSize: 16,
+    textAlign: 'center',
   },
 });
