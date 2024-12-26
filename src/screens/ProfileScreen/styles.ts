@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
     borderRadius: 45,
     marginRight: 15,
     borderWidth: 2,
-    borderColor: '#4682B4',
+    borderColor: '#FF69B4',
   },
   profileInfo: {
     flex: 1,
@@ -38,9 +38,9 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: '#555',
   },
-  editButton: {
-    padding: 10,
-    backgroundColor: '#E8F4FA',
+  editButton: { 
+    padding: 10, 
+    backgroundColor: '#fda4af',
     borderRadius: 8,
   },
   statsContainer: {
@@ -58,10 +58,11 @@ const styles = StyleSheet.create({
   },
   statBox: {
     alignItems: 'center',
+    justifyContent:'center'
   },
   statLabel: {
     fontSize: 14,
-    color: '#4682B4',
+    color: '#FF69B4',
     fontWeight: 'bold',
     marginTop: 5,
   },
@@ -74,6 +75,7 @@ const styles = StyleSheet.create({
     width: 32,
     height: 32,
     marginBottom: 4,
+    color:'#FF69B4'
   },
   menuContainer: {
     paddingVertical: 10,

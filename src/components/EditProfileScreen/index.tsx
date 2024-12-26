@@ -2,8 +2,12 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, Image } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
 import styles from './styles'; // Importando o arquivo de estilos separado
+import { useNavigation } from '@react-navigation/native';
 
-const EditProfileScreen = () => {
+
+const EditProfileScreen  = () => {
+  const navigation = useNavigation();
+
   const [name, setName] = useState('João Silva');
   const [phone, setPhone] = useState('1234567890');
   const [email, setEmail] = useState('joaosilva@example.com');
@@ -17,7 +21,8 @@ const EditProfileScreen = () => {
     <View style={styles.container}>
       {/* Cabeçalho */}
       <View style={styles.header}>
-        <TouchableOpacity>
+        
+        <TouchableOpacity onPress={() => navigation.goBack()}>
           <FontAwesome name="arrow-left" size={24} color="#333" />
         </TouchableOpacity>
         <Text style={styles.headerTitle}>Editar perfil</Text>

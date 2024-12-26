@@ -14,9 +14,14 @@ export default StyleSheet.create({
     elevation: 3,
   },
   headerText: {
-    fontSize: 20,
+    fontSize: 24,
     fontWeight: 'bold',
+    marginBottom: 10,
+    marginLeft:10,
+    color:'#FF69B4',
+
   },
+  
   chatItem: {
     flexDirection: 'row',
     padding: 15,
@@ -66,7 +71,7 @@ export default StyleSheet.create({
   },
   unreadBadge: {
     marginTop: 5,
-    backgroundColor: '#FF69B4', // Rosa para destacar
+    backgroundColor: '#FF69B4', 
     borderRadius: 12,
     paddingHorizontal: 6,
     paddingVertical: 2,

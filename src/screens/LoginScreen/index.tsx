@@ -1,44 +1,54 @@
-import React from 'react';
-import { View, TextInput, Button, Text, TouchableOpacity } from 'react-native';
+// LoginScreen.tsx
+import React, { useState } from 'react';
+import { View, TextInput, Text, TouchableOpacity, Alert } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import styles from './styles';
+import { login } from '../../services/authService';
 
 type LoginScreenProps = {
   navigation: StackNavigationProp<any>;
 };
 
 const LoginScreen: React.FC<LoginScreenProps> = ({ navigation }) => {
-  const goToHome = () => {
-    navigation.navigate('Main');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const handleLogin = async () => {
+    if (!email || !password) {
+      Alert.alert('Erro', 'Por favor, preencha todos os campos.');
+      return;
+    }
+
+    try {
+      console.log('Testando o endpoint')
+      const data = await login({ email, senhaHash: password });
+      Alert.alert('Sucesso', 'Login realizado com sucesso!');
+      navigation.navigate('Main', { userId: data.userId });
+    } catch (error :any  ) {
+     // Alert.alert('Erro', error.response?.data?.message || 'Erro ao realizar login.');
+    }
   };
 
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Bem-vindo(a)</Text>
-      <Text style={styles.subtitle}>Faça login para continuar</Text>
-      <TextInput 
-        style={styles.input} 
-        placeholder="Email" 
-        keyboardType="email-address" 
-        placeholderTextColor="#A9A9A9"
+      <TextInput
+        style={styles.input}
+        placeholder="Email"
+        value={email}
+        onChangeText={setEmail}
+        keyboardType="email-address"
       />
-      <TextInput 
-        style={styles.input} 
-        placeholder="Senha" 
-        secureTextEntry 
-        placeholderTextColor="#A9A9A9"
+      <TextInput
+        style={styles.input}
+        placeholder="Senha"
+        value={password}
+        onChangeText={setPassword}
+        secureTextEntry
       />
-      <View style={styles.buttonContainer}>
-        <TouchableOpacity style={styles.button}onPress={() => navigation.navigate('Main')}>
-          <Text style={styles.buttonText}>Entrar</Text>
-        </TouchableOpacity>
-      </View>
-      <View style={styles.footer}>
-        <Text style={styles.footerText}>Não tem uma conta?</Text>
-        <TouchableOpacity onPress={() => navigation.navigate('Signup')}>
-          <Text style={styles.footerLink}>Cadastre-se</Text>
-        </TouchableOpacity>
-      </View>
+      <TouchableOpacity style={styles.button} onPress={handleLogin}>
+        <Text style={styles.buttonText}>Entrar</Text>
+      </TouchableOpacity>
     </View>
   );
 };

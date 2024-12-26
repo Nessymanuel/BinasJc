@@ -11,14 +11,16 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 10,
+    color:'#FF69B4'
   },
   searchInput: {
     height: 40,
-    borderColor: '#FF69B4', // Cor rosa para o contorno
+    borderColor: '#a1a1aa', // Cor rosa para o contorno
     borderWidth: 1,
-    borderRadius: 5,
+    borderRadius: 8,
     paddingHorizontal: 10,
     marginBottom: 20,
+    marginTop:20,
   },
   stationItem: {
     padding: 15,

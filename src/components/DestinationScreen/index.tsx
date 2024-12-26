@@ -8,7 +8,7 @@ import styles from './styles';
 // Definindo o tipo de rotas
 type RootStackParamList = {
   Home: undefined;
-  Destino: undefined; // Adicione outras rotas conforme necessário
+  Destino: undefined;
   Iniciar: undefined;
 };
 
@@ -59,54 +59,57 @@ const DestinationScreen: React.FC = () => {
   };
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
+    <ScrollView contentContainerStyle={styles.container} showsVerticalScrollIndicator={false}>
+      {/* Cabeçalho */}
       <View style={styles.header}>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.goBack()}>
           <MaterialIcons name="close" size={28} color="#FF69B4" />
         </TouchableOpacity>
         <Text style={styles.headerText}>PARA ONDE VAIS?</Text>
       </View>
 
-      <View style={styles.currentLocationContainer}>
-        <FontAwesome name="dot-circle-o" size={26} color="#FF69B4" />
-        <Text style={styles.locationText}>Selecionar estação de partida</Text>
-        <ScrollView horizontal style={styles.stationSelector}>
-          {locations.map((location, index) => (
-            <TouchableOpacity
-              key={index}
-              style={[
-                styles.stationItem,
-                selectedDeparture === location.name && styles.selectedStation,
-              ]}
-              onPress={() => handleStationSelect(location.name, 'departure')}
-            >
-              <Text style={styles.stationName}>{location.name}</Text>
-            </TouchableOpacity>
-          ))}
-        </ScrollView>
+      {/* Conteúdo principal */}
+      <View >
+        <View style={styles.currentLocationContainer}>
+          <FontAwesome name="dot-circle-o" size={26} color="#FF69B4" />
+          <Text style={styles.locationText}>Selecionar estação de partida</Text>
+          <ScrollView horizontal style={styles.stationSelector} showsHorizontalScrollIndicator={false}>
+            {locations.map((location, index) => (
+              <TouchableOpacity
+                key={index}
+                style={[
+                  styles.stationItem,
+                  selectedDeparture === location.name && styles.selectedStation,
+                ]}
+                onPress={() => handleStationSelect(location.name, 'departure')}
+              >
+                <Text style={styles.stationName}>{location.name}</Text>
+              </TouchableOpacity>
+            ))}
+          </ScrollView>
+        </View>
+
+        <View style={styles.chooseDestinationContainer}>
+          <FontAwesome name="circle-o" size={26} color="#6A0DAD" />
+          <Text style={styles.destinationText}>Selecionar estação de chegada</Text>
+          <ScrollView horizontal style={styles.stationSelector} showsHorizontalScrollIndicator={false}>
+            {locations.map((location, index) => (
+              <TouchableOpacity
+                key={index}
+                style={[
+                  styles.stationItem,
+                  selectedArrival === location.name && styles.selectedStation,
+                ]}
+                onPress={() => handleStationSelect(location.name, 'arrival')}
+              >
+                <Text style={styles.stationName}>{location.name}</Text>
+              </TouchableOpacity>
+            ))}
+          </ScrollView>
+        </View>
       </View>
 
-      <View style={styles.chooseDestinationContainer}>
-        <FontAwesome name="circle-o" size={26} color="#6A0DAD" />
-        <Text style={styles.destinationText}>Selecionar estação de chegada</Text>
-        <ScrollView horizontal style={styles.stationSelector}>
-          {locations.map((location, index) => (
-            <TouchableOpacity
-              key={index}
-              style={[
-                styles.stationItem,
-                selectedArrival === location.name && styles.selectedStation,
-              ]}
-              onPress={() => handleStationSelect(location.name, 'arrival')}
-            >
-              <Text style={styles.stationName}>{location.name}</Text>
-            </TouchableOpacity>
-          ))}
-        </ScrollView>
-      </View>
-
-      <View style={styles.divider} />
-
+      {/* Botão de confirmação */}
       <TouchableOpacity
         style={[styles.confirmButton, !(selectedDeparture && selectedArrival) && styles.disabledButton]}
         onPress={handleConfirmReservation}

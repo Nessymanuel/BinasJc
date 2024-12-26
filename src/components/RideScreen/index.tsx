@@ -9,7 +9,7 @@ import styles from './styles';
 // Definindo o tipo de rotas para o Stack Navigator
 type RootStackParamList = {
   RideScreen: undefined;
-  Fim: undefined; // Defina outras rotas se necessário
+  Fim: undefined; 
 };
 
 // Tipagem de navegação para a tela atual

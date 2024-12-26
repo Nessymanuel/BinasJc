@@ -2,10 +2,12 @@ import React, { useState } from 'react';
 import { View, TextInput, Button, Text, TouchableOpacity, Alert } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import styles from './styles';
+import api from '../../services/api';
 
 type SignupScreenProps = {
   navigation: StackNavigationProp<any>;
 };
+
 
 const SignupScreen: React.FC<SignupScreenProps> = ({ navigation }) => {
   const [username, setUsername] = useState('');
@@ -13,7 +15,7 @@ const SignupScreen: React.FC<SignupScreenProps> = ({ navigation }) => {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
 
-  const handleSignup = () => {
+  const handleSignup = async () => {
     if (!username || !email || !password || !confirmPassword) {
       Alert.alert('Erro', 'Por favor, preencha todos os campos.');
       return;
@@ -23,15 +25,29 @@ const SignupScreen: React.FC<SignupScreenProps> = ({ navigation }) => {
       return;
     }
 
-    // Lógica para registrar o usuário
-    console.log('Usuário cadastrado com sucesso!');
-    Alert.alert('Sucesso', 'Usuário cadastrado com sucesso!');
-    // navigation.navigate('Login'); // Se desejar redirecionar para a tela de login
+    try {
+      const response = await api.post('/Auth/Register', {
+        username,
+        email,
+        senhaHash: password,
+      });
+
+      Alert.alert('Sucesso', 'Usuário cadastrado com sucesso!');
+      navigation.navigate('Login');
+    } catch (error: any) {
+      if (error.response && error.response.data) {
+        Alert.alert('Erro', error.response.data.message || 'Erro ao cadastrar usuário.');
+      } else {
+        Alert.alert('Erro', 'Não foi possível conectar-se ao servidor.');
+      }
+      console.error(error);
+    }
   };
 
   const handleLoginNavigation = () => {
     navigation.navigate('Login');
   };
+  
 
   return (
     <View style={styles.container}>

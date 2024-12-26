@@ -49,7 +49,7 @@ export default function ProfileScreen() {
           <Text style={styles.profileEmail}>joao.costa@mail.com</Text>
         </View>
         <TouchableOpacity style={styles.editButton} onPress={handleEditProfile}>
-          <MaterialIcons name="edit" size={24} color="#4682B4" />
+          <MaterialIcons name="edit" size={24} color="#1c1917" />
         </TouchableOpacity>
       </View>
 
@@ -64,7 +64,7 @@ export default function ProfileScreen() {
         </View>
         
         <View style={styles.statBox}>
-          <FontAwesome name="compass" size={40} color="#4682B4" />
+          <FontAwesome name="compass" size={36} color="#FF69B4" />
           <Text style={styles.statLabel}>Distância</Text>
           <Text style={styles.statText}>90.45 km</Text>
         </View>
@@ -103,7 +103,7 @@ interface MenuItemProps {
 function MenuItem({ title, icon, isLogout, onPress }: MenuItemProps) {
   return (
     <TouchableOpacity style={[styles.menuItem, isLogout && styles.logoutItem]} onPress={onPress}>
-      <FontAwesome name={icon} size={24} color={isLogout ? "red" : "#4682B4"} />
+      <FontAwesome name={icon} size={24} color={isLogout ? "red" : "#FF69B4"} />
       <Text style={[styles.menuText, isLogout && styles.logoutText]}>{title}</Text>
     </TouchableOpacity>
   );

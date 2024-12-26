@@ -33,9 +33,7 @@ const EndRideDetailsScreen = () => {
     <View style={styles.container}>
       {/* Cabeçalho */}
       <View style={styles.header}>
-        <TouchableOpacity>
-          <MaterialIcons name="arrow-back" size={24} color="#000" />
-        </TouchableOpacity>
+        
         <Text style={styles.headerTitle}>Corrida finalizada</Text>
       </View>
 
@@ -49,17 +47,17 @@ const EndRideDetailsScreen = () => {
       {/* Informações de resumo */}
       <View style={styles.summaryContainer}>
         <View style={styles.summaryItem}>
-          <MaterialIcons name="access-time" size={24} color="#007AFF" />
+          <MaterialIcons name="access-time" size={24} color="#FF69B4" />
           <Text style={styles.summaryLabel}>Tempo de corrida</Text>
           <Text style={styles.summaryValue}>09 : 12 min</Text>
         </View>
         <View style={styles.summaryItem}>
-          <FontAwesome name="pause" size={24} color="#007AFF" />
+          <FontAwesome name="pause" size={24} color="#FF69B4" />
           <Text style={styles.summaryLabel}>Tempo de pausa</Text>
           <Text style={styles.summaryValue}>01 : 15 min</Text>
         </View>
         <View style={styles.summaryItem}>
-          <FontAwesome name="road" size={24} color="#007AFF" />
+          <FontAwesome name="road" size={24} color="#FF69B4" />
           <Text style={styles.summaryLabel}>Distância</Text>
           <Text style={styles.summaryValue}>3.5 km</Text>
         </View>
@@ -69,13 +67,13 @@ const EndRideDetailsScreen = () => {
       <View style={styles.locationContainer}>
         <Text style={styles.locationTitle}>Local de partida</Text>
         <Text style={styles.locationText}>
-          <FontAwesome name="map-marker" size={18} color="#007AFF" /> Benfica Kifica
+          <FontAwesome name="map-marker" size={18} color="#FF69B4" /> Benfica Kifica
         </Text>
         <Text style={styles.timeText}>06 : 36 pm</Text>
 
         <Text style={styles.locationTitle}>Local de chegada</Text>
         <Text style={styles.locationText}>
-          <FontAwesome name="map-marker" size={18} color="#007AFF" /> Talatona Mirantes
+          <FontAwesome name="map-marker" size={18} color="#FF69B4" /> Talatona Mirantes
         </Text>
         <Text style={styles.timeText}>08 : 50 pm</Text>
       </View>
@@ -120,7 +118,7 @@ const EndRideDetailsScreen = () => {
               <TouchableOpacity style={styles.submitButton} onPress={handleSubmit}>
                 <Text style={styles.submitButtonText}>Enviar</Text>
               </TouchableOpacity>
-              <TouchableOpacity onPress={() => setModalVisible(false)}>
+              <TouchableOpacity  style={styles.cancelButton} onPress={() => setModalVisible(false)}>
                 <Text style={styles.cancelButtonText}>Cancelar</Text>
               </TouchableOpacity>
             </View>

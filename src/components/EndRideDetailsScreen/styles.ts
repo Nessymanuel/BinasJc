@@ -74,7 +74,7 @@ export default StyleSheet.create({
   locationTitle: {
     fontSize: 16,
     fontWeight: '600',
-    color: '#007AFF',
+    color: '#FF69B4',
     marginBottom: 5,
   },
   locationText: {
@@ -88,7 +88,7 @@ export default StyleSheet.create({
     marginBottom: 10,
   },
   rateButton: {
-    backgroundColor: '#007AFF',
+    backgroundColor: '#FF69B4',
     padding: 15,
     borderRadius: 30,
     alignItems: 'center',
@@ -135,13 +135,15 @@ export default StyleSheet.create({
     marginBottom: 20,
   },
   modalButtonsContainer: {
+    alignItems: 'center',
     flexDirection: 'row',
     justifyContent: 'space-around',
     width: '100%',
   },
   submitButton: {
-    backgroundColor: '#007AFF',
+    backgroundColor: '#FF69B4',
     padding: 10,
+    paddingHorizontal:20,
     borderRadius: 5,
     marginRight: 10,
   },
@@ -151,8 +153,17 @@ export default StyleSheet.create({
     fontWeight: 'bold',
   },
   cancelButtonText: {
-    color: '#007AFF',
+    color: '#FF69B4',
     fontSize: 14,
     fontWeight: 'bold',
+    
   },
+  cancelButton:{
+    backgroundColor: '#fff',
+    padding: 10,
+    borderRadius: 5,
+    marginRight: 10,
+    borderColor:'#ccc',
+    borderWidth: 1,
+  }
 });

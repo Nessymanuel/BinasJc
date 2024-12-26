@@ -6,10 +6,16 @@ export default StyleSheet.create({
     padding: 15,
     backgroundColor: '#F5F5F5',
   },
+    header: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 20,
+  },
   headerTitle: {
     fontSize: 22,
     fontWeight: 'bold',
-    marginBottom: 15,
+    color: '#333',
+    marginLeft: 15,
   },
   rideCard: {
     flexDirection: 'row',

@@ -54,7 +54,7 @@ const EndRideScreen = () => {
           <Image source={require('./bicicleta.png')} style={styles.bikeImage} />
           <View>
             <Text style={styles.address}>
-              <FontAwesome name="map-marker" size={18} color="#007AFF" /> 6391 Elgin St. Celina, Delaware 10299
+              <FontAwesome name="map-marker" size={18} color="#FF69B4" /> 6391 Elgin St. Celina, Delaware 10299
             </Text>
             <Text style={styles.timeDistance}>15 min/2.5 km</Text>
             <Text style={styles.note}>*Certifique-se de estacionar na zona permitida.</Text>

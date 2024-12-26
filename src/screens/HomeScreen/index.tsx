@@ -45,9 +45,9 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.header}>
+      {/* <View style={styles.header}>
         <Text style={styles.title}>BinasJC</Text>
-      </View>
+      </View> */}
 
       <MapView
         style={styles.map}
@@ -66,7 +66,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
             coordinate={{ latitude: station.latitude, longitude: station.longitude }}
             onPress={() => handleStationPress(station)}
           >
-            <Image source={require('./bicicleta.png')} style={styles.stationIcon} />
+            <Image source={require('./localizacao.png')} style={styles.stationIcon} />
           </Marker>
         ))}
       </MapView>

@@ -1,6 +1,8 @@
 import React from 'react';
-import { View, Text, FlatList, Image } from 'react-native';
+import { View, Text, FlatList, Image, TouchableOpacity } from 'react-native';
+import { FontAwesome } from '@expo/vector-icons';
 import styles from './styles';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
 interface Ride {
   id: string;
@@ -10,6 +12,17 @@ interface Ride {
   duration: string;
   points: string;
   image: any; // Use require para imagens locais
+}
+
+type RootStackParamList = {
+  RideHistory: undefined;
+  Profile: undefined;
+};
+
+type RideHistoryScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'RideHistory'>;
+
+interface Props {
+  navigation: RideHistoryScreenNavigationProp;
 }
 
 const rides: Ride[] = [
@@ -34,10 +47,17 @@ const rides: Ride[] = [
   // Adicione mais itens conforme necessário
 ];
 
-export default function RideHistoryScreen() {
+export default function RideHistoryScreen({ navigation }: Props) {
   return (
     <View style={styles.container}>
-      <Text style={styles.headerTitle}>Histórico de Corridas</Text>
+      {/* Botão de voltar */}
+      <View style={styles.header}>
+        <TouchableOpacity onPress={() => navigation.goBack()}>
+          <FontAwesome name="arrow-left" size={24} color="#333" />
+        </TouchableOpacity>
+        <Text style={styles.headerTitle}>Histórico de Corridas</Text>
+      </View>
+
       <FlatList
         data={rides}
         keyExtractor={(item) => item.id}

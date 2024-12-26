@@ -25,7 +25,7 @@ export default StyleSheet.create({
   title: {
     fontSize: 20,
     fontWeight: 'bold',
-    color: '#007AFF',
+    color: '#FF69B4',
   },
   subtitle: {
     fontSize: 14,
@@ -62,13 +62,13 @@ export default StyleSheet.create({
     marginTop: 10,
   },
   backButton: {
-    backgroundColor: '#e0e0e0',
+    backgroundColor: '#007AFF',
     paddingVertical: 10,
     paddingHorizontal: 20,
     borderRadius: 5,
   },
-  confirmButton: {
-    backgroundColor: '#007AFF',
+  confirmButton: { 
+    backgroundColor: '#FF69B4',
     paddingVertical: 10,
     paddingHorizontal: 20,
     borderRadius: 5,
