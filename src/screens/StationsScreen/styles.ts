@@ -1,11 +1,11 @@
-// src/screens/StationsScreen/styles.ts
+// styles.ts ou styles.js
 import { StyleSheet } from 'react-native';
 
-const styles = StyleSheet.create({
+export default StyleSheet.create({
   container: {
     flex: 1,
     padding: 16,
-    backgroundColor: '#ffffff',
+    backgroundColor: '#fff',
   },
   header: {
     fontSize: 24,
@@ -23,10 +23,9 @@ const styles = StyleSheet.create({
     marginTop:20,
   },
   stationItem: {
-    padding: 15,
-    backgroundColor: '#f9f9f9',
-    marginBottom: 10,
-    borderRadius: 5,
+    padding: 16,
+    borderBottomWidth: 1,
+    borderBottomColor: '#ccc',
   },
   stationName: {
     fontSize: 18,
@@ -36,16 +35,20 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: '#555',
   },
+  stationBikes: { // Adicionando estilo stationBikes
+    fontSize: 14,
+    color: '#888',
+    marginTop: 4,
+  },
   mapButton: {
-    marginTop: 10,
-    backgroundColor: '#FF69B4', // Cor rosa para o botão
-    padding: 10,
-    borderRadius: 5,
+    backgroundColor: '#007BFF',
+    padding: 8,
+    borderRadius: 8,
+    marginTop: 8,
+    alignItems: 'center',
   },
   mapButtonText: {
     color: '#fff',
-    textAlign: 'center',
+    fontSize: 14,
   },
 });
-
-export default styles;

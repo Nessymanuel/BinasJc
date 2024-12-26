@@ -1,42 +1,66 @@
-// src/screens/StationsScreen.tsx
-import React, { useState } from 'react';
-import { View, Text, FlatList, TouchableOpacity, TextInput } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, FlatList, TouchableOpacity, TextInput, Alert } from 'react-native';
 import styles from './styles';
 import { StackNavigationProp } from '@react-navigation/stack';
+import { BASE_URL } from '../../../config';
 
-// Definindo o tipo para as estações
 interface Station {
-  id: string;
-  name: string;
-  location: string;
+  id: number;
+  nome: string;
+  latitude: number;
+  longitude: number;
+  totalBicicletas: number;
 }
 
-// Definindo o tipo de navegação
 type StationScreenProps = {
-  navigation: StackNavigationProp<any>; // Use um tipo mais específico se possível
+  navigation: StackNavigationProp<any>;
 };
 
-const stations: Station[] = [
-  { id: '1', name: 'Estação Central', location: 'Rua Principal, 123' },
-  { id: '2', name: 'Estação Norte', location: 'Avenida das Nações, 456' },
-  { id: '3', name: 'Estação Sul', location: 'Praça do Comércio, 789' },
-];
-
-// Adicione o tipo de props ao componente
 export default function StationsScreen({ navigation }: StationScreenProps) {
+  const [stations, setStations] = useState<Station[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
 
-  // Filtrando as estações com base na pesquisa
+  // Função para carregar as estações do backend
+  const carregarEstacoes = async () => {
+    try {
+      const response = await fetch(`${BASE_URL}/Estacao`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      const data = await response.json();
+
+      if (Array.isArray(data)) {
+        setStations(data);
+      } else {
+        console.error("Dados recebidos não são um array:", data);
+        setStations([]);
+      }
+    } catch (error) {
+      console.error("Erro ao carregar estações:", error);
+      Alert.alert("Erro", "Não foi possível carregar as estações.");
+      setStations([]);
+    }
+  };
+
+  useEffect(() => {
+    carregarEstacoes();
+  }, []);
+
+  // Filtra as estações com base na pesquisa
   const filteredStations = stations.filter(station =>
-    station.name.toLowerCase().includes(searchQuery.toLowerCase())
+    station.nome.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-  // Definindo o tipo do item no FlatList
   const renderStationItem = ({ item }: { item: Station }) => (
     <View style={styles.stationItem}>
-      <Text style={styles.stationName}>{item.name}</Text>
-      <Text style={styles.stationLocation}>{item.location}</Text>
-      <TouchableOpacity style={styles.mapButton} onPress={() => navigation.navigate('Map')}>
+      <Text style={styles.stationName}>{item.nome}</Text>
+      <Text style={styles.stationLocation}>
+        Latitude: {item.latitude}, Longitude: {item.longitude}
+      </Text>
+      <Text style={styles.stationBikes}>Total de Bicicletas: {item.totalBicicletas}</Text>
+      <TouchableOpacity style={styles.mapButton} onPress={() => navigation.navigate('Map', { latitude: item.latitude, longitude: item.longitude })}>
         <Text style={styles.mapButtonText}>Ver no Mapa</Text>
       </TouchableOpacity>
     </View>
@@ -57,7 +81,7 @@ export default function StationsScreen({ navigation }: StationScreenProps) {
       <FlatList
         data={filteredStations}
         renderItem={renderStationItem}
-        keyExtractor={(item) => item.id}
+        keyExtractor={(item) => item.id.toString()}
       />
     </View>
   );

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, TextInput, Button, Text, TouchableOpacity, Alert } from 'react-native';
+import { View, TextInput, Text, TouchableOpacity, Alert } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import styles from './styles';
 import api from '../../services/api';
