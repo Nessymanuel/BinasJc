@@ -28,8 +28,12 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ navigation }) => {
   
       if (response.ok) {
         const data = await response.json();
+  
+        // Armazene o ID do usuário no AsyncStorage
+        await AsyncStorage.setItem('userId', data.id.toString());
+  
         Alert.alert('Login bem-sucedido!', `Bem-vindo(a), ${data.nome}`);
-        navigation.navigate('Main');
+        navigation.navigate('Main'); // Navega para a tela principal
       } else {
         Alert.alert('Erro de login', 'Credenciais inválidas. Tente novamente.');
       }
@@ -38,6 +42,7 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ navigation }) => {
       console.error('Erro de login:', error);
     }
   };
+  
 
   return (
     <View style={styles.container}>
