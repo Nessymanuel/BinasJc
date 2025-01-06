@@ -28,9 +28,7 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ navigation }) => {
   
       if (response.ok) {
         const data = await response.json();
-  
-        // Armazene o ID do usuário no AsyncStorage
-        await AsyncStorage.setItem('userId', data.id.toString());
+        
   
         Alert.alert('Login bem-sucedido!', `Bem-vindo(a), ${data.nome}`);
         navigation.navigate('Main'); // Navega para a tela principal

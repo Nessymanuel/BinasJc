@@ -1,62 +1,136 @@
-import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, ScrollView, Alert } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, ScrollView, TouchableOpacity, Alert } from 'react-native';
 import { FontAwesome, MaterialIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import styles from './styles';
+import { BASE_URL } from '../../../config';
 
 // Definindo o tipo de rotas
 type RootStackParamList = {
   Home: undefined;
-  Destino: undefined; // Adicione outras rotas conforme necessário
+  Destino: undefined;
   Iniciar: undefined;
 };
 
 type NavigationProps = StackNavigationProp<RootStackParamList, 'Destino'>;
 
 interface Station {
-  name: string;
-  isFavorite: boolean;
-  city: string;
+  id: number;
+  nome: string;
+  totalBicicletas: number; // Agora tem o campo de número de bicicletas
 }
-
-const locations: Station[] = [
-  { name: 'Estação Boa Vista', isFavorite: true, city: 'Boa Vista' },
-  { name: 'Estação Benfica', isFavorite: true, city: 'Benfica' },
-  { name: 'Estação Talatona', isFavorite: false, city: 'Talatona' },
-  { name: 'Estação Zango', isFavorite: false, city: 'Zango' },
-];
 
 const DestinationScreen: React.FC = () => {
   const navigation = useNavigation<NavigationProps>();
 
-  const [selectedDeparture, setSelectedDeparture] = useState<string | null>(null);
-  const [selectedArrival, setSelectedArrival] = useState<string | null>(null);
+  const [selectedDeparture, setSelectedDeparture] = useState<Station | null>(null);
+  const [stations, setStations] = useState<Station[]>([]); // Lista de estações carregada do backend
 
-  const handleStationSelect = (station: string, type: 'departure' | 'arrival') => {
-    if (type === 'departure') {
-      setSelectedDeparture(station);
-    } else {
-      setSelectedArrival(station);
+  // Função para carregar as estações do backend
+  const carregarEstacoes = async () => {
+    try {
+      const response = await fetch(`${BASE_URL}/Estacao`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      const data = await response.json();
+
+      if (Array.isArray(data)) {
+        setStations(data); // Atualiza o estado com as estações recebidas
+      } else {
+        console.error("Dados recebidos não são um array:", data);
+        setStations([]); // Limpa as estações caso o retorno não seja um array
+      }
+    } catch (error) {
+      console.error("Erro ao carregar estações:", error);
+      Alert.alert("Erro", "Não foi possível carregar as estações.");
+      setStations([]); // Limpa as estações em caso de erro
     }
   };
 
-  const handleConfirmReservation = () => {
-    if (selectedDeparture && selectedArrival) {
-      Alert.alert(
-        'Reserva Confirmada',
-        `Partida: ${selectedDeparture}, Chegada: ${selectedArrival}`,
-        [
-          {
-            text: 'OK',
-            onPress: () => navigation.navigate('Iniciar'), // Navega para a rota "Iniciar"
+  // Carregar as estações ao montar o componente
+  useEffect(() => {
+    carregarEstacoes();
+  }, []);
+
+  const handleStationSelect = (station: Station) => {
+    setSelectedDeparture(station);
+  };
+
+  const handleConfirmReservation = async () => {
+    if (selectedDeparture && selectedDeparture.totalBicicletas > 0) {
+      try {
+        const newBikeCount = selectedDeparture.totalBicicletas - 1;
+  
+        // Criar a reserva no backend
+        const reservation = {
+          usuarioId: 1, // Exemplo: você pode substituir por um valor dinâmico
+          bicicletaId: 1, // Exemplo: id da bicicleta (pode ser calculado ou selecionado)
+          estacaoId: selectedDeparture.id,
+          dataReserva: new Date().toISOString(),
+        };
+  
+        const response = await fetch(`${BASE_URL}/Reserva`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
           },
-        ]
-      );
+          body: JSON.stringify(reservation),
+        });
+  
+        if (response.ok) {
+          // Atualizar o número de bicicletas no servidor usando o PUT
+          const stationUpdate = {
+            ...selectedDeparture,
+            totalBicicletas: newBikeCount,
+          };
+  
+          const updateResponse = await fetch(`${BASE_URL}/Estacao/${selectedDeparture.id}`, {
+            method: 'PUT',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(stationUpdate),
+          });
+  
+          if (updateResponse.ok) {
+            // Atualizar a estação localmente, diminuindo o número de bicicletas
+            const updatedStations = stations.map(station =>
+              station.id === selectedDeparture.id
+                ? { ...station, totalBicicletas: newBikeCount }
+                : station
+            );
+            setStations(updatedStations); // Atualiza o estado com a nova quantidade de bicicletas
+  
+            // Confirmar a reserva
+            Alert.alert(
+              'Reserva Confirmada',
+              `Partida: ${selectedDeparture.nome}\nBicicleta reservada!`,
+              [
+                {
+                  text: 'OK',
+                  onPress: () => navigation.navigate('Iniciar'), // Navega para a rota "Iniciar"
+                },
+              ]
+            );
+          } else {
+            Alert.alert('Erro', 'Não foi possível atualizar a estação.');
+          }
+        } else {
+          Alert.alert('Erro', 'Não foi possível criar a reserva.');
+        }
+      } catch (error) {
+        console.error('Erro ao fazer a reserva:', error);
+        Alert.alert('Erro', 'Ocorreu um erro ao fazer a reserva.');
+      }
     } else {
-      Alert.alert('Erro', 'Por favor, selecione a estação de partida e de chegada.');
+      Alert.alert('Erro', 'Não há bicicletas disponíveis para reserva.');
     }
   };
+  
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
@@ -71,46 +145,34 @@ const DestinationScreen: React.FC = () => {
         <FontAwesome name="dot-circle-o" size={26} color="#FF69B4" />
         <Text style={styles.locationText}>Selecionar estação de partida</Text>
         <ScrollView horizontal style={styles.stationSelector}>
-          {locations.map((location, index) => (
-            <TouchableOpacity
-              key={index}
-              style={[
-                styles.stationItem,
-                selectedDeparture === location.name && styles.selectedStation,
-              ]}
-              onPress={() => handleStationSelect(location.name, 'departure')}
-            >
-              <Text style={styles.stationName}>{location.name}</Text>
-            </TouchableOpacity>
-          ))}
-        </ScrollView>
-      </View>
-
-      <View style={styles.chooseDestinationContainer}>
-        <FontAwesome name="circle-o" size={26} color="#6A0DAD" />
-        <Text style={styles.destinationText}>Selecionar estação de chegada</Text>
-        <ScrollView horizontal style={styles.stationSelector}>
-          {locations.map((location, index) => (
-            <TouchableOpacity
-              key={index}
-              style={[
-                styles.stationItem,
-                selectedArrival === location.name && styles.selectedStation,
-              ]}
-              onPress={() => handleStationSelect(location.name, 'arrival')}
-            >
-              <Text style={styles.stationName}>{location.name}</Text>
-            </TouchableOpacity>
-          ))}
+          {stations.length > 0 ? (
+            stations.map((station, index) => (
+              <TouchableOpacity
+                key={index}
+                style={[
+                  styles.stationItem,
+                  selectedDeparture?.id === station.id && styles.selectedStation,
+                ]}
+                onPress={() => handleStationSelect(station)}
+              >
+                <Text style={styles.stationName}>{station.nome}</Text>
+                <Text style={styles.stationName}>
+                  Bicicletas Disponíveis: {station.totalBicicletas}
+                </Text>
+              </TouchableOpacity>
+            ))
+          ) : (
+            <Text style={styles.stationName}>Carregando estações...</Text>
+          )}
         </ScrollView>
       </View>
 
       <View style={styles.divider} />
 
       <TouchableOpacity
-        style={[styles.confirmButton, !(selectedDeparture && selectedArrival) && styles.disabledButton]}
+        style={[styles.confirmButton, !selectedDeparture && styles.disabledButton]}
         onPress={handleConfirmReservation}
-        disabled={!(selectedDeparture && selectedArrival)}
+        disabled={!selectedDeparture || selectedDeparture.totalBicicletas <= 0}
       >
         <Text style={styles.confirmButtonText}>Confirmar Reserva</Text>
       </TouchableOpacity>

@@ -11,6 +11,7 @@ type RootStackParamList = {
   EditarP: undefined; 
   Historico: undefined;
   Termos: undefined;
+  Login:undefined;
 };
 
 // Tipagem de navegação para a tela atual
@@ -22,6 +23,7 @@ export default function ProfileScreen() {
   const handleLogout = () => {
     console.log('Usuário deslogado');
     // Lógica para deslogar o usuário
+    navigation.navigate('Login');
   };
 
   const handleEditProfile = () => {

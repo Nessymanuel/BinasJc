@@ -1,35 +1,57 @@
 // src/screens/CyclistsScreen.tsx
-import React, { useState } from 'react';
-import { View, Text, FlatList, TouchableOpacity, TextInput } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, FlatList, TouchableOpacity, TextInput, Alert } from 'react-native';
 import styles from './styles';
+import { BASE_URL } from '../../../config';
 
-// Definindo o tipo para os ciclistas
-interface Cyclist {
+interface User {
   id: string;
-  name: string;
-  score: number;
+  nome: string;
+  pontuacaoTotal: number;
 }
 
-const cyclists: Cyclist[] = [
-  { id: '1', name: ' Ana Gourgel', score: 120 },
-  { id: '2', name: ' Gracieth Manuel', score: 95 },
-  { id: '3', name: ' Rafael Pires', score: 150 },
-  { id: '4', name: ' João Costa', score: 80 },
-];
-
 export default function CyclistsScreen() {
+  const [users, setUsers] = useState<User[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
 
-  // Filtrando ciclistas com base na pesquisa
-  const filteredCyclists = cyclists.filter(cyclist =>
-    cyclist.name.toLowerCase().includes(searchQuery.toLowerCase())
+  // Função para carregar os usuários do backend
+  const carregarUsuarios = async () => {
+    try {
+      const response = await fetch(`${BASE_URL}/User`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      const data = await response.json();
+
+      if (Array.isArray(data)) {
+        setUsers(data); // Atualiza o estado com os usuários recebidos
+      } else {
+        console.error('Dados recebidos não são um array:', data);
+        setUsers([]); // Caso os dados não sejam um array válido
+      }
+    } catch (error) {
+      console.error('Erro ao carregar usuários:', error);
+      Alert.alert('Erro', 'Não foi possível carregar os usuários.');
+      setUsers([]); // Limpa a lista caso haja erro
+    }
+  };
+
+  useEffect(() => {
+    carregarUsuarios(); // Chama a função para carregar os usuários assim que a tela é carregada
+  }, []);
+
+  // Filtrando usuários com base na pesquisa
+  const filteredUsers = users.filter(user =>
+    user.nome.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   // Definindo o tipo do item no FlatList
-  const renderCyclistItem = ({ item }: { item: Cyclist }) => (
+  const renderUserItem = ({ item }: { item: User }) => (
     <View style={styles.cyclistItem}>
-      <Text style={styles.cyclistName}>{item.name}</Text>
-      <Text style={styles.cyclistScore}>Pontuação: {item.score}</Text>
+      <Text style={styles.cyclistName}>{item.nome}</Text>
+      <Text style={styles.cyclistScore}>Pontuação: {item.pontuacaoTotal}</Text>
       <TouchableOpacity style={styles.messageButton}>
         <Text style={styles.messageButtonText}>Enviar Mensagem</Text>
       </TouchableOpacity>
@@ -49,8 +71,8 @@ export default function CyclistsScreen() {
       />
       
       <FlatList
-        data={filteredCyclists}
-        renderItem={renderCyclistItem}
+        data={filteredUsers}
+        renderItem={renderUserItem}
         keyExtractor={(item) => item.id}
       />
     </View>

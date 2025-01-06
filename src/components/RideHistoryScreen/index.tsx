@@ -16,7 +16,7 @@ const rides: Ride[] = [
   {
     id: '1',
     bikeModel: 'BinaJC BK2545',
-    date: '5 ago 2022, 05:49 pm',
+    date: '25 Dez 2024, 05:49 pm',
     distance: '3.5 km',
     duration: '10.36 min',
     points: '+5 pts',
@@ -25,7 +25,7 @@ const rides: Ride[] = [
   {
     id: '2',
     bikeModel: 'BinaJC KG5689',
-    date: '6 ago 2022, 04:49 pm',
+    date: '26 Dez 2024, 04:49 pm',
     distance: '3.5 km',
     duration: '10.36 min',
     points: '+10 pts',

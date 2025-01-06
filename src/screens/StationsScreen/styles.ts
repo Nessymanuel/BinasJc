@@ -39,7 +39,7 @@ export default StyleSheet.create({
     marginTop: 4,
   },
   mapButton: {
-    backgroundColor: '#007BFF',
+    backgroundColor: '#FF69B4',
     padding: 8,
     borderRadius: 8,
     marginTop: 8,

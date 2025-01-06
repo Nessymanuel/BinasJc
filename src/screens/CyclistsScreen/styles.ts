@@ -1,30 +1,29 @@
 // src/screens/CyclistsScreen/styles.ts
 import { StyleSheet } from 'react-native';
 
-const styles = StyleSheet.create({
+export default StyleSheet.create({
   container: {
     flex: 1,
     padding: 16,
-    backgroundColor: '#ffffff',
+    backgroundColor: '#fff',
   },
   header: {
     fontSize: 24,
     fontWeight: 'bold',
-    marginBottom: 10,
+    marginBottom: 16,
   },
   searchInput: {
     height: 40,
-    borderColor: '#FF69B4', // Cor rosa para o contorno
+    borderColor: '#ccc', // Cor mais neutra para o contorno
     borderWidth: 1,
-    borderRadius: 5,
+    borderRadius: 8,
     paddingHorizontal: 10,
-    marginBottom: 20,
+    marginBottom: 16,
   },
   cyclistItem: {
-    padding: 15,
-    backgroundColor: '#f9f9f9',
-    marginBottom: 10,
-    borderRadius: 5,
+    padding: 16,
+    borderBottomWidth: 1,
+    borderBottomColor: '#ccc', // Linha de separação mais suave
   },
   cyclistName: {
     fontSize: 18,
@@ -33,17 +32,17 @@ const styles = StyleSheet.create({
   cyclistScore: {
     fontSize: 14,
     color: '#555',
+    marginTop: 4, // Pequeno espaçamento para melhor separação entre as linhas
   },
   messageButton: {
-    marginTop: 10,
     backgroundColor: '#FF69B4', // Cor rosa para o botão
-    padding: 10,
-    borderRadius: 5,
+    padding: 8,
+    borderRadius: 8,
+    marginTop: 8,
+    alignItems: 'center',
   },
   messageButtonText: {
     color: '#fff',
-    textAlign: 'center',
+    fontSize: 14,
   },
 });
-
-export default styles;
